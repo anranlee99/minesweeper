@@ -3,6 +3,7 @@
 let xAxis = 21;
 let yAxis = 10;
 let tileSize = '30px 30px';
+let seconds = 0;
 
 /*----- app's state (variables) -----*/
 
@@ -87,9 +88,28 @@ function generateGrids(){
 
 }
 
+function clock(){
+
+    if(seconds<1000)
+    {
+        seconds++;
+    }
+    let ones = Math.floor(seconds % 10)
+    let tens = Math.floor(seconds/10 % 10)
+    let hundreds = Math.floor(seconds/100 % 10)
+
+    let onesEl = document.querySelector('#time1s');
+    let tensEl = document.querySelector('#time10s');
+    let hundsEl = document.querySelector('#time100s');
+
+    onesEl.src = `./assets/d${ones}.svg`
+    tensEl.src = `./assets/d${tens}.svg`
+    hundsEl.src = `./assets/d${hundreds}.svg`
+
+}
 //GAME START
 generateGrids();
 
-
+//setInterval(clock, 1000);
 
 

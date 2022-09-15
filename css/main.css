@@ -69,7 +69,7 @@ input {
     /* border-style: inset; */
     width: 300px;
     height: 100px; 
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     margin: auto;
     background: #808080;
@@ -90,13 +90,28 @@ input {
     align-items: center;
 } 
 
-
+.panelBoxes{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: black;
+    align-items: center;
+    width: 23%;
+    height: 90%;
+    border: 1px solid black;
+}
 
 #resetBtn{
     height: 100px;
     width: 100px;
     border: 1px solid black;
     /* background-image: url('assets/smiley.png'); */
+}
+
+
+
+.statusNums{
+    width: 33%;
+    height: 90%;
 }
 
 #resetIcon{
