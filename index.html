@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Minesweeper</title>
+        <link rel="stylesheet" href="css/main.css">
+        <script defer src="js/main.js"></script>
+    </head>
+    <body>
+        <div id="customInputDiv">
+            <input type="number" id="widthInput" placeholder="Custom Width:" min="10">
+            <input type="number" id="heightInput"placeholder="Custom Height:" min="10">
+            <input type="number" id="bombInput" placeholder="Bomb Count: (5-25 for %)" min="5" max="25">
+            <button id="customSettingsBtn">Enter</button>
+        </div>
+        <div id="statusBar">
+                <button id="resetBtn">
+                    <img id="resetIcon" src="assets/unpressed_smiley.png">
+                </button>
+        </div>
+        <div id="board">
+            
+        </div>
+    </body>
+</html>

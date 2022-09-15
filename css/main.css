@@ -1,0 +1,108 @@
+/* /* * {
+    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+} */
+/* body {
+    text-align: center;
+}
+#board {
+    display: flex;
+    height: 306px;
+    width: 306px;
+    margin: auto;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.square{
+    display: flex;
+    border: 1px solid black;
+    width: 100px; 
+    height: 100px; 
+    justify-content: center;
+    align-items: center;
+}
+
+#message-box{
+    height: 75px;
+}
+
+button {
+    margin: 0 auto;
+} */ 
+*{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+#customInputDiv{
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    
+    width: 170px;
+    height: 30px;
+}
+
+#customSettingsBtn{
+    width: 80px;
+    height: 30px;
+}
+
+#board{
+    display: flex;
+    background-color: rgb(176, 175, 175);
+    height: 500px;
+    width: 600px;
+    margin: auto;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#statusBar{
+    display: flex;
+    border: 1px solid black;
+    /* border-style: inset; */
+    width: 300px;
+    height: 100px; 
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background: #808080;
+
+    
+    /* background-image: url('assets/closed_tile.png'); */
+    /* background: url(../assets/closed_tile.png); */
+    /* background-size: auto; */
+
+}
+
+.tile{
+    border: 1px solid black;
+    display: flex;
+    width: 100px; 
+    height: 100px; 
+    justify-content: center;
+    align-items: center;
+} 
+
+
+
+#resetBtn{
+    height: 100px;
+    width: 100px;
+    border: 1px solid black;
+    /* background-image: url('assets/smiley.png'); */
+}
+
+#resetIcon{
+    /* src: url('assets/unpressed_smiley.png'); */
+    height: 100%;
+    width: 100%; 
+}
+
+

@@ -1,0 +1,79 @@
+**App's Functionality**
+
+Disclaimer: I plan to steal all artwork necessary unless that is not allowed. 
+I'm really no artist so that will become the new greatest challenge if so. 
+
+RULES
+- minesweeper's objective is to clear every tile that is not a bomb, and to not click on the bombs
+- each tile that is adjacent to a bomb should display how many bombs it is touching when it is uncovered
+
+MVP
+- As a user, I want to see the game follow minesweeper's rules
+- As a user, I want to click a reset button to start the game over.
+- As a user, I NEEEEED to see the sunglasses when I win. 
+- As a user, I want to see flags work properly. 
+    -When the game is over, I should see bombs go red or have X's if I lost
+    -See the correct/incorrect flags when the game is over
+- As a user, I want to see the count of remaining bombs. 
+
+
+Icebox Features (In order of likelihood to be implemented)
+- As a user, I want to be able to chord (game sucks to play without)
+    -middle mouse button for chord click?
+- As a user, I would like a 'no corners' mode, aka no bombs in the corners. 
+- As a user, I want to see the game clock. 
+- As a user, I want to see an optional menu on the stats (height, width, density, etc)
+
+(probably won't get to this one, the logic is insane)
+- As a user, it would be great if there was a 'no guess' mode. 
+    -In minesweeper, you can encounter scenarios where you have to guess.
+    -Some enjoy the thrill but I find it emotionally crushing (I am unlucky)
+
+
+**Psuedocode**
+When we a start a game of minesweeper:
+- Initialize an array either with the default size and bomb density, or the custom inputs
+
+- Initialize an array of the numbers underneath(?)
+    -Method 1: On click, calculate the adjacent squares, generate the images accordingly
+    -Method 2: Generate the bombs/numbers board underneath, and 'reveal' on click
+    NOTE: leaning towards Method 1 because I am hoping the flags will stay on the board
+    and for the bombs to reveal if you didn't flag. So it will not always reveal the same thing
+
+- I will need functions to generate the bombs, maybe solutions, and an init function which the 
+    reset button will also listen for
+
+- I liked the program flow of tictactoe a lot, but since I really want to implement a chord click,
+  I might as well reuse the code/logic needed for that for functions that will be called on click.
+- I need many listeners, including a left click (open tile), right click (flag), reset btn, custom imput btn
+- Need some kind of logic to implement the chord click on a revealed square, possibly if/else 
+  nested in my listeners, which will then execute a different function. 
+
+While there are tiles that are not flagged, revealed, or bombs:
+- just listen for inputs basically. 
+- if a covered tile is clicked, reveal it. 
+    -if it's a bomb, lose, reveal all bombs, right/wrong flags, change the smiley to dead smiley
+- if a revealed tile is clicked, trigger chord click function
+    -if adjacentBombsCount === adjacentFlagsCount, trigger the reveal function on all adjacent tiles
+    that are not flags.
+- if a covered tile is right clicked, flag it if it's unflagged, unflag if it's flagged
+- if an uncovered tile is right clicked, do nothing
+
+
+When the game is over:
+-reveal all times that are bombs, and not flagged
+-if a tile is flagged, show right/wrong
+-do not uncover all tiles
+-display win smiley, loss smiley, stop listening for clicks except for input button and reset button
+
+** Application State Data **
+- Bomb array, have not decided the best data format yet, probably a 2D array since I will need 
+- An array for the unopened squares
+- An array for the squares around a bomb to display the numbers
+
+** Application Constant Data **
+-game state (win, loss, neither(playing))
+- A count of the bombs
+-A count of the flags, and the amount of bombs to display (bombs minus flags)
+-define null for adjacentBombsCount && adjacentFlagsCount (?)
+    -need to try the code to know what is better
