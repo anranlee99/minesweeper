@@ -10,10 +10,11 @@
     </head>
     <body>
         <div id="customInputDiv">
-            <input type="number" id="widthInput" placeholder="Custom Width:" min="10">
-            <input type="number" id="heightInput"placeholder="Custom Height:" min="10">
+            <input type="number" id="widthInput" placeholder="Custom Width:" min="9">
+            <input type="number" id="heightInput"placeholder="Custom Height:" min="9">
             <input type="number" id="bombInput" placeholder="Bomb Count: (5-25 for %)" min="5" max="25">
             <button id="customSettingsBtn">Enter</button>
+            <input type="checkbox" placeholder="Hate Corners?">Hate Corners?</input>
         </div>
         <div id="statusBar">
                 <div class="panelBoxes">
@@ -22,7 +23,7 @@
                     <img class="statusNums" id="bomb1s" src="assets/d0.svg">
                     
                 </div>
-                <div>
+                <div id="resetDiv">
                     <button id="resetBtn">
                         <img id="resetIcon" src="assets/unpressed_smiley.png">
                     </button>
