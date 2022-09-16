@@ -1,6 +1,6 @@
 /*----- constants -----*/
 
-let xAxis = 9;
+let xAxis = 20;
 let yAxis = 9;
 let tileSize = '30px 30px';
 let seconds = 0;
@@ -99,6 +99,7 @@ boardEl.addEventListener('contextmenu', function(evt) {
 
 /*----- functions -----*/
 
+
 function generateGrids(){
     for(let j=0; j<yAxis; j++){
         for (let i=0; i<xAxis; i++){
@@ -128,6 +129,101 @@ function generateGrids(){
     }
     document.querySelector('#statusBar').style.height = `${statusBarHeight}px`;
 
+}
+
+function adjacentTiles(coord){
+    //calculate the adjacent coordinates and return an array of the strings?
+    let arr = []
+    let temp = coord.split(',')
+    let x = parseInt(temp[0], 10);
+    let y = parseInt(temp[1], 10);
+
+    //if the coord is a corner
+    if((!x || x === xAxis-1) && (!y || y===yAxis-1)){
+
+      //top left corner
+      if(!x && !y){
+        arr.push(`${x+1},${y}`)       
+        arr.push(`${x},${y+1}`)
+        arr.push(`${x+1},${y+1}`)
+      }
+      //top right corner
+      else if(x===xAxis-1 && !y){
+        arr.push(`${x-1},${y}`)
+        arr.push(`${x-1},${y+1}`)
+        arr.push(`${x},${y+1}`)
+        
+      }
+      //bottom left corner
+      else if(!x && y===yAxis-1){
+        
+        arr.push(`${x},${y-1}`)
+        arr.push(`${x+1},${y-1}`)
+        arr.push(`${x+1},${y}`)
+        
+      }
+      //bottom right
+      //(x===xAxis-1 && y===yAxis-1)
+      else{
+        arr.push(`${x-1},${y-1}`)
+        arr.push(`${x},${y-1}`)
+        arr.push(`${x-1},${y}`)
+      }
+      
+    }
+    //if the coord is an edge and not a corner
+    else if((!x && y && y<yAxis-1) || (x===xAxis-1 && y && y<yAxis-1) || (!y && x && x<xAxis-1) || (y===yAxis-1 && x && x<xAxis-1)){
+      //top edge
+      if(!y && x && x<xAxis-1){
+        
+        arr.push(`${x-1},${y}`)
+        arr.push(`${x+1},${y}`)
+        
+        arr.push(`${x-1},${y+1}`)        
+        arr.push(`${x},${y+1}`)
+        arr.push(`${x+1},${y+1}`)
+      }
+      //bottom edge
+      else if(y===yAxis-1 && x && x<xAxis-1){
+        arr.push(`${x-1},${y-1}`)
+        arr.push(`${x},${y-1}`)
+        arr.push(`${x+1},${y-1}`)
+        arr.push(`${x-1},${y}`)
+        arr.push(`${x+1},${y}`)
+      }
+      //left edge
+      else if(!x && y && y<yAxis-1){
+        arr.push(`${x},${y-1}`)
+        arr.push(`${x+1},${y-1}`)
+        arr.push(`${x+1},${y}`)
+        arr.push(`${x},${y+1}`)
+        arr.push(`${x+1},${y+1}`)
+      }
+      //right edge
+      //x===xAxis-1 && y && y<yAxis-1
+      else{
+        arr.push(`${x-1},${y-1}`)
+        arr.push(`${x},${y-1}`)
+        arr.push(`${x-1},${y}`)
+        arr.push(`${x-1},${y+1}`)
+        arr.push(`${x},${y+1}`)
+      }
+    }
+    //coord is not an edge
+    else{
+      //the 3 above
+      arr.push(`${x-1},${y-1}`)
+      arr.push(`${x},${y-1}`)
+      arr.push(`${x+1},${y-1}`)
+      //the 2 beside
+      arr.push(`${x-1},${y}`)
+      arr.push(`${x+1},${y}`)
+      //the 3 below
+      arr.push(`${x-1},${y+1}`)
+      arr.push(`${x},${y+1}`)
+      arr.push(`${x+1},${y+1}`)
+    }
+  return arr;
 }
 
 function clock(){
@@ -198,6 +294,6 @@ function generateBombs(){
 //GAME START
 generateGrids();
 
-// let refreshIntervalId = setInterval(clock, 1000);
+let refreshIntervalId = setInterval(clock, 1000);
 //clearInterval(refreshIntervalId);
 
