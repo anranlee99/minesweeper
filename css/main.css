@@ -65,20 +65,16 @@ input {
     display: flex;
     height: 90%;
     border: 1px solid black;
-    /* background-image: url('assets/smiley.png'); */
 }
 
-
+#resetIcon{
+    height: 100%;
+    width: 100%; 
+}
 
 .statusNums{
     width: 33%;
     height: 90%;
-}
-
-#resetIcon{
-    /* src: url('assets/unpressed_smiley.png'); */
-    height: 100%;
-    width: 100%; 
 }
 
 /* disable dragging and selecting images */
