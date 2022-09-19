@@ -24,9 +24,15 @@ const resetIconEl = document.querySelector('#resetIcon')
 const resetBtnEl = document.querySelector('#resetBtn');
 const boardEl = document.querySelector('#board');
 const inputBtnEl = document.querySelector('#customSettingsBtn')
+const checkBoxEl = document.querySelector('#noCorners')
 /*----- event listeners -----*/
 
 /*----- custom input btn listeners -----*/
+checkBoxEl.addEventListener('click', function(evt){
+    noCornerMode = evt.target.checked;
+    console.log('no corners: ', noCornerMode)
+    init();
+})
 inputBtnEl.addEventListener('click', function(){
     const width = document.querySelector('#widthInput').value;
     const height = document.querySelector('#heightInput').value;
@@ -38,17 +44,18 @@ inputBtnEl.addEventListener('click', function(){
         let bombPercent = parseInt(bombs, 10);
         //use a floor here to get an int back
         bombCount = Math.floor(xAxis*yAxis*(bombPercent/100));
-        noCornerMode = document.querySelector('#noCorners').checked;
+        // noCornerMode = document.querySelector('#noCorners').checked;
     } else {
         xAxis = MIN_DIM;
         yAxis = MIN_DIM;
         bombCount = 10;
-        noCornerMode = document.querySelector('#noCorners').checked;
+        // noCornerMode = document.querySelector('#noCorners').checked;
     }
     
     
     init();
 })
+
 /*----- custom input btn listeners -----*/
 /*----- reset button listeners -----*/
 resetBtnEl.addEventListener('mousedown', function() {
@@ -375,7 +382,6 @@ function generateBombs(){
             }
         }
     }
-    console.log(bombCoords)
 }
 //helper functions
 //helper function to change the image given a string for the image and an event object
@@ -393,7 +399,7 @@ function clearInputEls(){
     document.querySelector('#widthInput').value = '';
     document.querySelector('#heightInput').value = '';
     document.querySelector('#bombInput').value = '';
-    document.querySelector('#noCorners').checked = false;
+    //document.querySelector('#noCorners').checked = false;
 }
 function reset(){
     clearInterval(refreshIntervalId);
