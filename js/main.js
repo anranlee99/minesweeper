@@ -299,6 +299,8 @@ function uncover(tileID){
         if(tilesRemaining.length===bombCount){
             gameWon();
              gameOver = true;
+             flagCount = bombCount;
+             setBombDisplay();
         }
         
     }
