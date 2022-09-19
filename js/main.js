@@ -32,6 +32,7 @@ inputBtnEl.addEventListener('click', function(){
     const height = document.querySelector('#heightInput').value;
     const bombs = document.querySelector('#bombInput').value
     if(width && height && bombs){
+        //TODO: if the custom inputs are invalid, use defaults
         xAxis = parseInt(width, 10);
         yAxis = parseInt(height, 10);
         let bombPercent = parseInt(bombs, 10);
@@ -77,7 +78,7 @@ boardEl.addEventListener('mousedown', function(evt) {
             case 1:
                 /* LMB DOWN CLICK */
                 //If it's not a flagged tile, 
-                if(!evt.target.classList.contains('flagged')){
+                if(!evt.target.classList.contains('flagged') && !evt.target.classList.contains('open')){
                     setEvtImg('pressed_tile.png', evt)
                 }
                 break;
@@ -118,9 +119,13 @@ boardEl.addEventListener('mouseup', function(evt) {
             case 1:
                 //if tile is covered, uncover
                 //if the is tile is flagged or blank, do nothing
-                uncover(evt);
+                if(evt.target.classList.contains('covered')){
+                    uncover(evt.target.id);
+                }
                 //if the tile is a number, do chord click
-                //chord();
+                else if(evt.target.classList.contains('number')){
+                    chord(evt.target.id);
+                }
                 break;
             case 2:
                 //console.log('Middle Mouse button pressed.');
@@ -167,13 +172,23 @@ function generateGrids(){
     //TODO: Figure out what to do with the status bar
     document.querySelector('#statusBar').style.width = `${32*xAxis}px`;
 
-    let statusBarHeight;
-    if(8*yAxis >= 90){
-        statusBarHeight = yAxis*8;
-    }   else{
-        statusBarHeight = 90;
+    // let statusBarHeight;
+    // if(8*yAxis >= 90){
+    //     statusBarHeight = yAxis*8;
+    // }   else{
+    //     statusBarHeight = 90;
+    // }
+    // document.querySelector('#statusBar').style.height = `${statusBarHeight}px`;
+    document.querySelector('#statusBar').style.height = '90px';
+    let panelBoxesEl = document.querySelectorAll('.panelBoxes');
+    //adjust the dimensions of the panel boxes if beyond a certain size;
+    if(32*xAxis*0.25 > 160){
+        panelBoxesEl.forEach(function(div){
+            div.style.width= '160px';
+            div.style.margin = '40px';
+        })
+        document.querySelector('#statusBar').style.justifyContent = 'center';
     }
-    document.querySelector('#statusBar').style.height = `${statusBarHeight}px`;
 }
 //calculate the adjacentTiles and return an array of strings in the form of 'x,y'
 function adjacentTiles(coord){
@@ -195,6 +210,31 @@ function adjacentTiles(coord){
     }
     return arr;
   }
+//perform the chording function on a tile
+function chord(tileID){
+    let adjArr = adjacentTiles(tileID);
+    let tile = document.getElementById(`${tileID}`);
+    let adjFlagCount = 0;
+    let adjBombCount = 0
+
+    adjArr.forEach(function(coord){
+        if(bombCoords.includes(coord)){
+            adjBombCount++;
+        }
+        if(document.getElementById(coord).classList.contains('flagged')){
+            adjFlagCount++;
+        }
+    })
+    if(adjBombCount === adjFlagCount){
+        
+        adjArr.forEach(function(coord){
+            tile = document.getElementById(coord);
+            if(tile.classList.contains('covered') && !tile.classList.contains('flagged')){
+                uncover(coord);
+            }
+        })
+    }
+}
 //calculate the time to display and change out the images
 //note: requires help of setInterval()
 function clock(){
@@ -237,39 +277,53 @@ function setBombDisplay(){
     hundsEl.src = `./assets/d${hundreds}.svg`
 }
 //resolves opening a tile
-function uncover(evt){
-    if(bombCoords.includes(evt.target.id)){
-        evt.target.classList.add('killer');
+function uncover(tileID){
+    let tile = document.getElementById(tileID);
+    if(bombCoords.includes(tileID)){
+        tile.classList.add('killer');
         gameLost();
         gameOver = true;
     } else {
-        evt.target.classList.add('open');
-        evt.target.classList.remove('covered');
+        tile.classList.add('open');
+        tile.classList.remove('covered');
         //do some sort of calculation for the numbers underneath
-        renderNumbers(evt);
+        renderNumbers(tileID);
+        let tilesRemaining = document.querySelectorAll('.covered');
+        if(tilesRemaining.length===bombCount){
+            gameWon();
+             gameOver = true;
+        }
+        
     }
     
 }
-function renderNumbers(evt){
-    let adjArr = adjacentTiles(evt.target.id);
+function renderNumbers(tileID){
+    let adjArr = adjacentTiles(tileID);
+    let tile = document.getElementById(`${tileID}`);
+    tile.classList.add('open');
+    tile.classList.remove('covered');
     let adjBombCount = 0;
+    let toResolve = [];
     adjArr.forEach(function(coord){
         if(bombCoords.includes(coord)){
             adjBombCount++;
         }
     })
+
+    setElImg(`open${adjBombCount}.svg`, tile);
+
     if(adjBombCount){
-        evt.target.classList.add('number');
-        
+        tile.classList.add('number');
     } else{
-        evt.target.classList.add('clear');
+        tile.classList.add('clear');
+        adjArr.forEach(function(coord){
+            tile = document.getElementById(`${coord}`);
+            if(tile.classList.contains('covered')){
+                renderNumbers(coord);
+            }
+            
+        })
     }
-    setEvtImg(`open${adjBombCount}.svg`, evt);
-    //TODO: resolve all of the empty tiles
-    // if(evt.target.classList.includes('clear')){
-    //     adjArr.forEach(function(coord){
-    //     })
-    // }
 }
 
 function gameLost(){
@@ -283,30 +337,45 @@ function gameLost(){
     })
     //call some kind of game over function
     clearInterval(refreshIntervalId);
+    document.querySelector('#resetIcon').src = './assets/lose_smiley.png';
     
+}
+
+function gameWon(){
+    bombCoords.forEach(function(coord){
+        let tile = document.getElementById(coord)
+        if(!tile.classList.contains('flagged')){
+            setElImg('flag_tile.png', tile)
+        }
+    })
+    clearInterval(refreshIntervalId);
+    document.querySelector('#resetIcon').src = './assets/win_smiley.svg';
 }
 //generates the coordinates of bombs based on bombCount
 //pushes the coordinates as strings in the form of 'x,y' to the global bombCoords array
 function generateBombs(){
     //playing with bombs in corners
     if(!noCornerMode){
-        console.log('with corners')
         while(bombCoords.length<bombCount){
             let rand1 = Math.floor(Math.random() * (xAxis))
             let rand2 = Math.floor(Math.random() * (yAxis))
-            bombCoords.push(`${rand1},${rand2}`);
+            if(!bombCoords.includes(`${rand1},${rand2}`)){
+                bombCoords.push(`${rand1},${rand2}`);
+            } 
         }
     } else{
-        console.log('without corners')
         //playing without bombs in corners
         while(bombCoords.length<bombCount){
             let rand1 = Math.floor(Math.random() * (xAxis))
             let rand2 = Math.floor(Math.random() * (yAxis))
             if((rand1!==0 && rand1!==xAxis-1) && rand2!==0 && rand2!==yAxis-1){
-                bombCoords.push(`${rand1},${rand2}`);
+                if(!bombCoords.includes(`${rand1},${rand2}`)){
+                    bombCoords.push(`${rand1},${rand2}`);
+                }
             }
         }
     }
+    console.log(bombCoords)
 }
 //helper functions
 //helper function to change the image given a string for the image and an event object
@@ -327,10 +396,10 @@ function clearInputEls(){
     document.querySelector('#noCorners').checked = false;
 }
 function reset(){
-    // console.log('INIT CALLED')
     clearInterval(refreshIntervalId);
     //wow this is a neat way to remove all children tags
     document.querySelector('#board').innerHTML = '';
+    bombCoords = [];
     seconds = 0;
     gameOver = false;
 }
