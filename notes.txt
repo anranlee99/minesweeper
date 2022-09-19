@@ -77,3 +77,19 @@ When the game is over:
 -A count of the flags, and the amount of bombs to display (bombs minus flags)
 -define null for adjacentBombsCount && adjacentFlagsCount (?)
     -need to try the code to know what is better
+
+
+** Program Flow **
+The game should start, and not have the clock running until the first move - DONE
+
+-What should happen on a move
+    -If the tile is not opened, then open the square
+        -if the tile is a bomb, then lose
+        -if the tile is a flag, do nothing
+        -if the tile is open, do the chord function
+        
+    DILEMMA: 
+    I could generate the numbers underneath the unopened tiles two ways:
+    1) calculate and generate them all, then "reveal" them on open
+    2) calculate and generate them on when the tile is opened
+    

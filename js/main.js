@@ -12,9 +12,8 @@ let flagCount = 0;
 let bombCoords = [];
 let noCornerMode = false;
 let refreshIntervalId = null;
+let gameOver = false;
 
-//not sure if i need this
-let newGame = false;
 
 
 /*----- app's state (variables) -----*/
@@ -29,12 +28,22 @@ const inputBtnEl = document.querySelector('#customSettingsBtn')
 
 /*----- custom input btn listeners -----*/
 inputBtnEl.addEventListener('click', function(){
-    xAxis = parseInt(document.querySelector('#widthInput').value, 10);
-    yAxis = parseInt(document.querySelector('#heightInput').value, 10);
-    let bombPercent = parseInt(document.querySelector('#bombInput').value, 10);
-    //use a floor here to get an int back
-    bombCount = Math.floor(xAxis*yAxis*(bombPercent/100));
-    noCornerMode = document.querySelector('#noCorners').checked;
+    const width = document.querySelector('#widthInput').value;
+    const height = document.querySelector('#heightInput').value;
+    const bombs = document.querySelector('#bombInput').value
+    if(width && height && bombs){
+        xAxis = parseInt(width, 10);
+        yAxis = parseInt(height, 10);
+        let bombPercent = parseInt(bombs, 10);
+        //use a floor here to get an int back
+        bombCount = Math.floor(xAxis*yAxis*(bombPercent/100));
+        noCornerMode = document.querySelector('#noCorners').checked;
+    } else {
+        xAxis = MIN_DIM;
+        yAxis = MIN_DIM;
+        bombCount = 10;
+        noCornerMode = document.querySelector('#noCorners').checked;
+    }
     
     
     init();
@@ -63,67 +72,70 @@ resetBtnEl.addEventListener('mouseup', function() {
 
 /*----- board listeners -----*/
 boardEl.addEventListener('mousedown', function(evt) {
-    switch (evt.which) {
-        case 1:
-            /* LMB DOWN CLICK */
-            //If it's not a flagged tile, 
-            if(!evt.target.classList.contains('flagged')){
-                setImg('pressed_tile.png', evt)
-            }
-            break;
-        case 2:
-            //console.log('Middle Mouse button pressed.');
-            break;
-        case 3:
-            /* RMB DOWN CLICK */
-            //flag
-            if(evt.target.classList.contains('flagged'))
-            {
-                evt.target.classList.remove('flagged')
-                setImg('closed_tile.png', evt)
-                flagCount--;
-                setBombDisplay();
-            } 
-            //unflag
-            else {
-                evt.target.classList.add('flagged')
-                setImg('flag_tile.png', evt)
-                flagCount++;
-                setBombDisplay();
-            }
-            
-            break;
-        default:
-            //console.log('You have a strange Mouse!');
+    if(!gameOver){
+        switch (evt.which) {
+            case 1:
+                /* LMB DOWN CLICK */
+                //If it's not a flagged tile, 
+                if(!evt.target.classList.contains('flagged')){
+                    setEvtImg('pressed_tile.png', evt)
+                }
+                break;
+            case 2:
+                //console.log('Middle Mouse button pressed.');
+                break;
+            case 3:
+                /* RMB DOWN CLICK */
+                //flag
+                if(!evt.target.classList.contains('open')){
+                    if(evt.target.classList.contains('flagged'))
+                    {
+                        evt.target.classList.remove('flagged')
+                        setEvtImg('closed_tile.png', evt)
+                        flagCount--;
+                        setBombDisplay();
+                    } 
+                    //unflag
+                    else {
+                        evt.target.classList.add('flagged')
+                        setEvtImg('flag_tile.png', evt)
+                        flagCount++;
+                        setBombDisplay();
+                    }
+                }
+
+                
+                break;
+            default:
+                //console.log('You have a strange Mouse!');
+        }
     }
   
 })
 boardEl.addEventListener('mouseup', function(evt) {
-    switch (evt.which) {
-        case 1:
-            //if tile is covered, uncover
-            //if the is tile is flagged or blank, do nothing
-            //if the tile is a number, do chord click
-            break;
-        case 2:
-            //console.log('Middle Mouse button pressed.');
-            break;
-        case 3:
-            //right mouse button
-            break;
-        default:
-            //console.log('You have a strange Mouse!');
+    if(!gameOver){
+        switch (evt.which) {
+            case 1:
+                //if tile is covered, uncover
+                //if the is tile is flagged or blank, do nothing
+                uncover(evt);
+                //if the tile is a number, do chord click
+                //chord();
+                break;
+            case 2:
+                //console.log('Middle Mouse button pressed.');
+                break;
+            case 3:
+                //right mouse button
+                break;
+            default:
+                //console.log('You have a strange Mouse!');
+        }
     }
 })
 boardEl.addEventListener('contextmenu', function(evt) {
     evt.preventDefault();
   });
-
-// boardEl.addEventListener('mouseleave', function(evt) {
-//     console.log('mouseleave')
-//     evt.target.style.background = `url('./assets/closed_tile.png')`;
-//     evt.target.style.backgroundSize = tileSize;
-// })
 
 //get rid of the menu on right click
 /*----- board listeners -----*
@@ -224,19 +236,68 @@ function setBombDisplay(){
     tensEl.src = `./assets/d${tens}.svg`
     hundsEl.src = `./assets/d${hundreds}.svg`
 }
+//resolves opening a tile
+function uncover(evt){
+    if(bombCoords.includes(evt.target.id)){
+        evt.target.classList.add('killer');
+        gameLost();
+        gameOver = true;
+    } else {
+        evt.target.classList.add('open');
+        evt.target.classList.remove('covered');
+        //do some sort of calculation for the numbers underneath
+        renderNumbers(evt);
+    }
+    
+}
+function renderNumbers(evt){
+    let adjArr = adjacentTiles(evt.target.id);
+    let adjBombCount = 0;
+    adjArr.forEach(function(coord){
+        if(bombCoords.includes(coord)){
+            adjBombCount++;
+        }
+    })
+    if(adjBombCount){
+        evt.target.classList.add('number');
+        
+    } else{
+        evt.target.classList.add('clear');
+    }
+    setEvtImg(`open${adjBombCount}.svg`, evt);
+    //TODO: resolve all of the empty tiles
+    // if(evt.target.classList.includes('clear')){
+    //     adjArr.forEach(function(coord){
+    //     })
+    // }
+}
 
-
+function gameLost(){
+    bombCoords.forEach(function(coord){
+        let tile = document.getElementById(coord)
+        if(tile.classList.contains('killer')){
+            setElImg('mine_incorrect.svg', tile)
+        } else if(!tile.classList.contains('flagged')){
+            setElImg('mine_correct.svg', tile);
+        }
+    })
+    //call some kind of game over function
+    clearInterval(refreshIntervalId);
+    
+}
 //generates the coordinates of bombs based on bombCount
 //pushes the coordinates as strings in the form of 'x,y' to the global bombCoords array
 function generateBombs(){
     //playing with bombs in corners
     if(!noCornerMode){
+        console.log('with corners')
         while(bombCoords.length<bombCount){
             let rand1 = Math.floor(Math.random() * (xAxis))
             let rand2 = Math.floor(Math.random() * (yAxis))
             bombCoords.push(`${rand1},${rand2}`);
         }
     } else{
+        console.log('without corners')
         //playing without bombs in corners
         while(bombCoords.length<bombCount){
             let rand1 = Math.floor(Math.random() * (xAxis))
@@ -249,40 +310,38 @@ function generateBombs(){
 }
 //helper functions
 //helper function to change the image given a string for the image and an event object
-function setImg(img, evt){
+function setEvtImg(img, evt){
     evt.target.style.background = `url('./assets/${img}')`;
     evt.target.style.backgroundSize = tileSize;
+}
+function setElImg(img, el){
+    
+    el.style.background = `url('./assets/${img}')`;
+    el.style.backgroundSize = tileSize;
 }
 //clear the input boxes
 function clearInputEls(){
     document.querySelector('#widthInput').value = '';
     document.querySelector('#heightInput').value = '';
     document.querySelector('#bombInput').value = '';
+    document.querySelector('#noCorners').checked = false;
 }
 function reset(){
-    console.log('INIT CALLED')
+    // console.log('INIT CALLED')
     clearInterval(refreshIntervalId);
     //wow this is a neat way to remove all children tags
     document.querySelector('#board').innerHTML = '';
-    // bombCount = 10;
-    // xAxis = 9;
-    // yAxis = 9;
     seconds = 0;
-
-    // newGame = false;
+    gameOver = false;
 }
 function init(){
-    //clear out old data
-    // if(newGame){
-    //     reset();
-    // }
+
     reset();
 
-
-    
     generateGrids();
     generateBombs();
     setBombDisplay();
+    clearInputEls();
     refreshIntervalId = setInterval(clock, 1000);
 }
 //GAME START
