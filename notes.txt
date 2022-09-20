@@ -92,4 +92,14 @@ The game should start, and not have the clock running until the first move - DON
     I could generate the numbers underneath the unopened tiles two ways:
     1) calculate and generate them all, then "reveal" them on open
     2) calculate and generate them on when the tile is opened
-    
+
+
+    TODO 9/20:
+    1) create a pop-up menu for the custom inputs
+        -make sure you can add 0-3 custom inputs
+        -indicate that bomb is a % more clearly
+    2) add a hover menu for the stats
+    3) clean up variables (let vs const)
+        -use objects for setting variables?
+    4) clean up comments
+    5) consider breaking up js into separate files

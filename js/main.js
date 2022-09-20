@@ -3,9 +3,10 @@ const MIN_DIM = 9;
 const MAX_DIM = 50
 const MIN_BOMB = 5;
 const MAX_BOMB = 25;
+const TILE_SIZE = '30px 30px';
 let xAxis = MIN_DIM;
 let yAxis = MIN_DIM;
-let tileSize = '30px 30px';
+
 let seconds = 0;
 let bombCount = 10;
 let flagCount = 0;
@@ -25,15 +26,41 @@ const resetBtnEl = document.querySelector('#resetBtn');
 const boardEl = document.querySelector('#board');
 const inputBtnEl = document.querySelector('#customSettingsBtn')
 const checkBoxEl = document.querySelector('#noCorners')
+const settingsBtnEl = document.querySelector('#settingsBtn')
+const exitPopupEl = document.querySelector('#exitPopup')
 /*----- event listeners -----*/
 
 /*----- custom input btn listeners -----*/
+
+exitPopupEl.addEventListener('click', function(){
+    closePopup();
+})
+document.querySelector('#popupScreen').addEventListener('click', function(evt){
+    console.log(evt.target.id)
+    if(evt.target.id==='popupScreen'){
+        closePopup();
+    }
+    
+})
+settingsBtnEl.addEventListener('click', function(){
+   let popupScreenStyle = document.querySelector('#popupScreen').style;
+   let mainDisplay = document.querySelector('#mainDisplay').style;
+   mainDisplay.filter = 'blur(8px)';
+   
+   let popupStyle = document.querySelector('#popup').style;
+   popupStyle.display = 'flex';
+   popupScreenStyle.display = 'flex';
+   popupStyle.zIndex = '1';
+   popupScreenStyle.zIndex = '1';
+   
+})
 checkBoxEl.addEventListener('click', function(evt){
     noCornerMode = evt.target.checked;
     console.log('no corners: ', noCornerMode)
     init();
 })
 inputBtnEl.addEventListener('click', function(){
+    console.log('inputbtn event listener called')
     const width = document.querySelector('#widthInput').value;
     const height = document.querySelector('#heightInput').value;
     const bombs = document.querySelector('#bombInput').value
@@ -51,8 +78,7 @@ inputBtnEl.addEventListener('click', function(){
         bombCount = 10;
         // noCornerMode = document.querySelector('#noCorners').checked;
     }
-    
-    
+    closePopup();
     init();
 })
 
@@ -168,7 +194,7 @@ function generateGrids(){
             tile.style.width = '30px';
             //helper function doesn't work here because it expects an event
             tile.style.background = `url('./assets/closed_tile.png')`;
-            tile.style.backgroundSize = tileSize;
+            tile.style.backgroundSize = TILE_SIZE;
             document.querySelector('#board').appendChild(tile);    
         }
     }
@@ -178,7 +204,14 @@ function generateGrids(){
 
     //TODO: Figure out what to do with the status bar
     document.querySelector('#statusBar').style.width = `${32*xAxis}px`;
-
+    document.querySelector('#toolBar').style.width = `${32*xAxis}px`;
+    document.querySelector('#mainDisplay').style.width = `${32*xAxis}px`;
+    document.querySelector('body').style.width = `${32*xAxis + 400}px`;
+    document.querySelector('body').style.height = `${32*yAxis + 400}px`;
+    document.querySelector('#mainDisplay').style.height = `${32*yAxis + 171}px`;
+    document.querySelector('#popupScreen').style.width = `${32*xAxis + 400}px`;
+    document.querySelector('#popupScreen').style.height = `${32*yAxis + 400}px`;
+    
     // let statusBarHeight;
     // if(8*yAxis >= 90){
     //     statusBarHeight = yAxis*8;
@@ -196,6 +229,19 @@ function generateGrids(){
         })
         document.querySelector('#statusBar').style.justifyContent = 'center';
     }
+}
+function closePopup(){
+    let popupStyle = document.querySelector('#popup').style;
+    let mainDisplay = document.querySelector('#mainDisplay').style;
+    let popupScreenStyle = document.querySelector('#popupScreen').style;
+
+    popupStyle.display = 'none';
+    popupStyle.zIndex = '-1';
+    popupScreenStyle.display = 'none';
+    popupScreenStyle.zIndex = '-1';
+    mainDisplay.filter = 'none';
+
+    clearInputEls();
 }
 //calculate the adjacentTiles and return an array of strings in the form of 'x,y'
 function adjacentTiles(coord){
@@ -302,9 +348,7 @@ function uncover(tileID){
              flagCount = bombCount;
              setBombDisplay();
         }
-        
     }
-    
 }
 function renderNumbers(tileID){
     let adjArr = adjacentTiles(tileID);
@@ -347,7 +391,6 @@ function gameLost(){
     //call some kind of game over function
     clearInterval(refreshIntervalId);
     document.querySelector('#resetIcon').src = './assets/lose_smiley.png';
-    
 }
 
 function gameWon(){
@@ -389,19 +432,19 @@ function generateBombs(){
 //helper function to change the image given a string for the image and an event object
 function setEvtImg(img, evt){
     evt.target.style.background = `url('./assets/${img}')`;
-    evt.target.style.backgroundSize = tileSize;
+    evt.target.style.backgroundSize = TILE_SIZE;
 }
 function setElImg(img, el){
     
     el.style.background = `url('./assets/${img}')`;
-    el.style.backgroundSize = tileSize;
+    el.style.backgroundSize = TILE_SIZE;
 }
 //clear the input boxes
 function clearInputEls(){
     document.querySelector('#widthInput').value = '';
     document.querySelector('#heightInput').value = '';
     document.querySelector('#bombInput').value = '';
-    //document.querySelector('#noCorners').checked = false;
+    document.querySelector('#noCorners').checked = false;
 }
 function reset(){
     clearInterval(refreshIntervalId);
@@ -418,7 +461,6 @@ function init(){
     generateGrids();
     generateBombs();
     setBombDisplay();
-    clearInputEls();
     refreshIntervalId = setInterval(clock, 1000);
 }
 //GAME START
