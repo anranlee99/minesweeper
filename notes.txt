@@ -95,7 +95,7 @@ The game should start, and not have the clock running until the first move - DON
 
 
     TODO 9/20:
-    1) create a pop-up menu for the custom inputs
+    1) //DONEcreate a pop-up menu for the custom inputs
         -make sure you can add 0-3 custom inputs
         -indicate that bomb is a % more clearly
     2) add a hover menu for the stats
