@@ -9,34 +9,54 @@
         <script defer src="js/main.js"></script>
     </head>
     <body>
-        <div id="customInputDiv">
-            <input type="number" id="widthInput" placeholder="Custom Width:" min="9">
-            <input type="number" id="heightInput"placeholder="Custom Height:" min="9">
-            <input type="number" id="bombInput" placeholder="Bomb Count: (5-25 for %)" min="5" max="25">
-            <button id="customSettingsBtn">Enter</button>
-            <input type="checkbox" id="noCorners">Hate Corners?</input>
+        <div id="popupScreen">
+            <div id="popup">
+           
+                <div id="customInputDiv">
+                    <button id="exitPopup">
+                        <img id='exitIcon' src="assets/exit_popup.png">
+                    </button>
+                    <input type="number" class='customFields' id="widthInput" placeholder="Custom Width:" min="9">
+                    <input type="number" class='customFields' id="heightInput"placeholder="Custom Height:" min="9">
+                    <input type="number" class='customFields' id="bombInput" placeholder="Bomb %: (5-25)" min="5" max="25">
+                    <div class="customFields">
+                        <input type="checkbox" class='customFields' id="noCorners"></input>
+                        <p>No Bombs in Corners</p>
+                    </div>
+                    <button id="customSettingsBtn">Enter</button>
+                </div>
+                
+            </div>
         </div>
-        <div id="statusBar">
+        <div id="mainDisplay">
+            
+            <div id="toolBar">
+                <button id="settingsBtn">
+                    <img id="settingsIcon" src="assets/wrench_icon.png">
+                </button>
+            </div>
+            
+            
+            <div id="statusBar">
                 <div class="panelBoxes">
                     <img class="statusNums" id="bomb100s" src="assets/d0.svg">
                     <img class="statusNums" id="bomb10s" src="assets/d0.svg">
                     <img class="statusNums" id="bomb1s" src="assets/d0.svg">
-                    
                 </div>
                 <div id="resetDiv">
                     <button id="resetBtn">
                         <img id="resetIcon" src="assets/unpressed_smiley.png">
                     </button>
                 </div>
-                
                 <div class="panelBoxes">
                     <img class="statusNums" id="time100s" src="assets/d0.svg">
                     <img class="statusNums" id="time10s" src="assets/d0.svg">
                     <img class="statusNums" id="time1s" src="assets/d0.svg">
                 </div>
-        </div>
-        <div id="board">
-            
+            </div>
+            <div id="board">
+                
+            </div>
         </div>
     </body>
 </html>
