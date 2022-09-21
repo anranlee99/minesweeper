@@ -27,16 +27,54 @@ const boardEl = document.querySelector('#board');
 const inputBtnEl = document.querySelector('#customSettingsBtn')
 const checkBoxEl = document.querySelector('#noCorners')
 const settingsBtnEl = document.querySelector('#settingsBtn')
+const infoMenuEl = document.querySelector('#infoMenu')
+// infoMenuEl.style.backgroundImage = 'url(assets/info_icon.svg)';
 const exitPopupEl = document.querySelector('#exitPopup')
 /*----- event listeners -----*/
 
 /*----- custom input btn listeners -----*/
+infoMenuEl.addEventListener('mouseenter', function(){
+    let menu = document.createElement('div')
+    menu.style.opacity = '0.95';
+    menu.style.backgroundColor = '#669999';
+    
+    menu.style.width = '100px'
+    menu.style.height = '150px'
+    menu.style.marginLeft = '60px';
+    menu.style.display = 'flex';
+    menu.style.alignContent = 'space-around'
 
+    let list = document.createElement('dl')
+    list.style.margin = 'auto';
+    list.style.display = 'flex';
+    list.style.flexDirection = 'column'
+    list.style.alignContent = 'space-evenly'
+    let widthText = document.createElement('dt');
+    let heightText = document.createElement('dt');
+    let bombText = document.createElement('dt');
+    
+    widthText.innerText = `Width: ${xAxis}`;
+    heightText.innerText = `Height: ${yAxis}`;
+    bombText.innerText = `Bombs: ${bombCount}`;
+
+    widthText.style.margin = '10px';
+    heightText.style.margin = '10px';
+    bombText.style.margin = '10px';
+    list.appendChild(widthText)
+    list.appendChild(heightText)
+    list.appendChild(bombText)
+    menu.appendChild(list)
+
+    infoMenuEl.appendChild(menu)
+})
+
+infoMenuEl.addEventListener('mouseleave', function(){
+    infoMenuEl.innerHTML = ''
+})
 exitPopupEl.addEventListener('click', function(){
     closePopup();
 })
 document.querySelector('#popupScreen').addEventListener('click', function(evt){
-    console.log(evt.target.id)
     if(evt.target.id==='popupScreen'){
         closePopup();
     }
@@ -56,28 +94,11 @@ settingsBtnEl.addEventListener('click', function(){
 })
 checkBoxEl.addEventListener('click', function(evt){
     noCornerMode = evt.target.checked;
-    console.log('no corners: ', noCornerMode)
     init();
 })
 inputBtnEl.addEventListener('click', function(){
-    console.log('inputbtn event listener called')
-    const width = document.querySelector('#widthInput').value;
-    const height = document.querySelector('#heightInput').value;
-    const bombs = document.querySelector('#bombInput').value
-    if(width && height && bombs){
-        //TODO: if the custom inputs are invalid, use defaults
-        xAxis = parseInt(width, 10);
-        yAxis = parseInt(height, 10);
-        let bombPercent = parseInt(bombs, 10);
-        //use a floor here to get an int back
-        bombCount = Math.floor(xAxis*yAxis*(bombPercent/100));
-        // noCornerMode = document.querySelector('#noCorners').checked;
-    } else {
-        xAxis = MIN_DIM;
-        yAxis = MIN_DIM;
-        bombCount = 10;
-        // noCornerMode = document.querySelector('#noCorners').checked;
-    }
+    
+    getSettings();
     closePopup();
     init();
 })
@@ -180,7 +201,47 @@ boardEl.addEventListener('contextmenu', function(evt) {
 
 
 /*----- functions -----*/
-
+//helper function for the input menu
+function getSettings(){
+    const width = document.querySelector('#widthInput').value;
+    const height = document.querySelector('#heightInput').value;
+    const bombs = document.querySelector('#bombInput').value
+    if(width){
+        if(width > MAX_DIM){
+            xAxis = MAX_DIM;
+        }
+        else if(width < MIN_DIM){
+            xAxis = MIN_DIM;
+        }
+        else {
+            xAxis = parseInt(width, 10);
+        }
+    }
+    if(height){
+        if(height > MAX_DIM){
+            yAxis = MAX_DIM;
+        }
+        else if(height < MIN_DIM){
+            yAxis = MIN_DIM;
+        }
+        else {
+            yAxis = parseInt(height, 10);
+        }
+    }
+    if(bombs){
+        if(bombs > MAX_BOMB){
+            bombPercent = MAX_BOMB;
+        }
+        else if(bombs < MIN_BOMB){
+            bombPercent = MIN_BOMB;
+        }
+        else {
+            let bombPercent = parseFloat(bombs);
+            bombCount = Math.round(xAxis*yAxis*(bombPercent/100));
+            
+        }
+    }
+}
 //create the actual divs and images for the game
 function generateGrids(){
     for(let j=0; j<yAxis; j++){
@@ -198,6 +259,7 @@ function generateGrids(){
             document.querySelector('#board').appendChild(tile);    
         }
     }
+    //maybe move all of this to some render function
     //scale the board to fit the amount of tiles we have
     document.querySelector('#board').style.width = `${32*xAxis}px`; 
     document.querySelector('#board').style.height = `${32*yAxis}px`;
@@ -211,15 +273,16 @@ function generateGrids(){
     document.querySelector('#mainDisplay').style.height = `${32*yAxis + 171}px`;
     document.querySelector('#popupScreen').style.width = `${32*xAxis + 400}px`;
     document.querySelector('#popupScreen').style.height = `${32*yAxis + 400}px`;
-    
-    // let statusBarHeight;
-    // if(8*yAxis >= 90){
-    //     statusBarHeight = yAxis*8;
-    // }   else{
-    //     statusBarHeight = 90;
-    // }
-    // document.querySelector('#statusBar').style.height = `${statusBarHeight}px`;
+    let vw = window.innerWidth
+    let vh = window.innerHeight
+    if(vw > 32*xAxis + 400){
+        document.querySelector('body').style.width = `${vw}px`;
+    } 
+    if(vh > 32*yAxis + 400){
+        document.querySelector('body').style.height = `${vh}px`;
+    }
     document.querySelector('#statusBar').style.height = '90px';
+    document.querySelector('#toolBar').style.height = '90px';
     let panelBoxesEl = document.querySelectorAll('.panelBoxes');
     //adjust the dimensions of the panel boxes if beyond a certain size;
     if(32*xAxis*0.25 > 160){
@@ -230,7 +293,7 @@ function generateGrids(){
         document.querySelector('#statusBar').style.justifyContent = 'center';
     }
 }
-function closePopup(){
+function closePopup(){ 
     let popupStyle = document.querySelector('#popup').style;
     let mainDisplay = document.querySelector('#mainDisplay').style;
     let popupScreenStyle = document.querySelector('#popupScreen').style;
@@ -253,9 +316,7 @@ function adjacentTiles(coord){
     for(let i=-1; i<2; i++){
       if(((y+i)>=0) && (y+i)<yAxis){
         for(let j=-1; j<2; j++){
-          //console.log("j, i", j, i)
           if(((x+j)>=0 && (x+j)<xAxis) && !((y+i)===y && (x+j)===x)){
-            //console.log('pushed')
             arr.push(`${x+j},${y+i}`)
           }
         }
@@ -453,6 +514,7 @@ function reset(){
     bombCoords = [];
     seconds = 0;
     gameOver = false;
+    flagCount = 0;
 }
 function init(){
 
