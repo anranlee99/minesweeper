@@ -46,7 +46,7 @@ p{
 #infoMenu{
     height: 50px;
     width: 50px;
-    border: 1px solid 003333;
+    border: 1px solid #003333;
     background-image: url("../assets/info_icon.png");
     background-size: cover;
     align-self: flex-end;
