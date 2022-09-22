@@ -6,7 +6,7 @@ const MAX_BOMB = 25;
 const TILE_SIZE = '30px 30px';
 let xAxis = MIN_DIM;
 let yAxis = MIN_DIM;
-
+let bombPercent = 12;
 let seconds = 0;
 let bombCount = 10;
 let flagCount = 0;
@@ -240,6 +240,8 @@ function getSettings(){
             bombCount = Math.round(xAxis*yAxis*(bombPercent/100));
             
         }
+    } else{
+        bombCount = Math.round(xAxis*yAxis*(bombPercent/100));
     }
 }
 //create the actual divs and images for the game
