@@ -157,14 +157,11 @@ boardEl.addEventListener('mousedown', function(evt) {
                         setBombDisplay();
                     }
                 }
-
-                
                 break;
             default:
                 //console.log('You have a strange Mouse!');
         }
     }
-  
 })
 boardEl.addEventListener('mouseup', function(evt) {
     if(!gameOver){
@@ -191,11 +188,12 @@ boardEl.addEventListener('mouseup', function(evt) {
         }
     }
 })
+//get rid of the menu on right click
 boardEl.addEventListener('contextmenu', function(evt) {
     evt.preventDefault();
   });
 
-//get rid of the menu on right click
+
 /*----- board listeners -----*
 
 

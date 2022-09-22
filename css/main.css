@@ -1,202 +1,192 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Open Sans', sans-serif;
-    background-color: #003333;
-    height: 100vh;
-    width: 100vw;
-    
-}
-
-p{
-    font-family: 'Open Sans', sans-serif;
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Open Sans', sans-serif;
+	background-color: #003333;
+	height: 100vh;
+	width: 100vw;
 
 }
 
-#mainDisplay{
-    /* flex-direction: column;  */
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    /* position: relative;
-    z-index: 0;
-    margin: auto; */
-    
-}
-#settingsBtn{
-    height: 50px;
-    width: 50px;
-    border: 1px solid #003333;
-    align-self: flex-end;
-    background: transparent;
+p {
+	font-family: 'Open Sans', sans-serif;
+
 }
 
-#settingsBtn:hover{
-    cursor: pointer;
+#mainDisplay {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+#settingsBtn {
+	height: 50px;
+	width: 50px;
+	border: 1px solid #003333;
+	align-self: flex-end;
+	background: transparent;
+}
+
+#settingsBtn:hover {
+	cursor: pointer;
 }
 
 #toolBar {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    padding-bottom: 1rem;
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	padding-bottom: 1rem;
 }
 
-#infoMenu{
-    height: 50px;
-    width: 50px;
-    border: 1px solid #003333;
-    background-image: url("../assets/info_icon.png");
-    background-size: cover;
-    align-self: flex-end;
-    /* display: flex; */
+#infoMenu {
+	height: 50px;
+	width: 50px;
+	border: 1px solid #003333;
+	background-image: url("../assets/info_icon.png");
+	background-size: cover;
+	align-self: flex-end;
 
 }
-#infoIcon{
-    height: 100%;
-    width: 100%;
+
+#infoIcon {
+	height: 100%;
+	width: 100%;
 }
 
-#settingsIcon{
-    height: 100%;
-    width: 100%;
+#settingsIcon {
+	height: 100%;
+	width: 100%;
 }
+
 #popup {
-    height: 500px;
-    width: 300px;
-    z-index: -1;
-    background-color: #669999;
-    border: 1px solid black;
-    position: absolute;
-    display: none;
-}
-#popupScreen{
-    z-index: -1;
-    /* background-color: white; */
-    width: 100vh;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    display: none;
-}
-#exitPopup{
-    height: 30px;
-    width: 30px;
+	height: 500px;
+	width: 300px;
+	z-index: -1;
+	background-color: #669999;
+	border: 1px solid black;
+	position: absolute;
+	display: none;
 }
 
-#exitIcon{
-    height: 100%;
-    width: 100%;
+#popupScreen {
+	z-index: -1;
+	/* background-color: white; */
+	width: 100vh;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	display: none;
 }
 
-#customInputDiv{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+#exitPopup {
+	height: 30px;
+	width: 30px;
 }
 
-.customFields{
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+#exitIcon {
+	height: 100%;
+	width: 100%;
+}
+
+#customInputDiv {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.customFields {
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
 
 }
+
 input {
-    
-    width: 170px;
-    height: 30px;
+
+	width: 170px;
+	height: 30px;
 }
 
-#customSettingsBtn{
-    width: 80px;
-    height: 30px;
+#customSettingsBtn {
+	width: 80px;
+	height: 30px;
 }
 
-#board{
-    display: flex;
-    background-color: rgb(176, 175, 175);
-    height: 500px;
-    width: 600px;
-    margin: auto;
-    align-items: center;
-    flex-wrap: wrap;
+#board {
+	display: flex;
+	background-color: rgb(176, 175, 175);
+	height: 500px;
+	width: 600px;
+	margin: auto;
+	align-items: center;
+	flex-wrap: wrap;
 }
 
-#statusBar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-     padding: 1rem;
-    gap: 1rem; 
-    background: #808080;
-}
-#resetBtn{
-    border: none;
-    background: #808080;
-    height: 75px;
-    /* flex-shrink: 1;
-    min-width: 0; */
-    
+#statusBar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+	gap: 1rem;
+	background: #808080;
 }
 
-.panelBoxes{
-    display: flex;
-    background-color: black;
-    max-height: 90px;
-    /* height: 90%; */
-    
+#resetBtn {
+	border: none;
+	background: #808080;
+	height: 75px;
 }
 
-#game-container{
+.panelBoxes {
+	display: flex;
+	background-color: black;
+	max-height: 90px;
 
 }
-.tile{
-    border: 1px solid black;
-    display: flex;
-    /* justify-content: center;
-    align-items: center; */
-} 
 
-
-#resetIcon{
-    height: 85%;
-    border: 1px solid black;
-    background: #808080;
+.tile {
+	border: 1px solid black;
+	display: flex;
 }
 
-.statusNums{
-    height: 100%;
-    width: calc(100%/3);
-    /* width: 33%; */
-    padding: 5%;
+#resetIcon {
+	height: 85%;
+	border: 1px solid black;
+	background: #808080;
+}
+
+.statusNums {
+	height: 100%;
+	width: calc(100%/3);
+	padding: 5%;
 }
 
 /* disable dragging and selecting images */
 img {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-    
-  }
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+
+}
