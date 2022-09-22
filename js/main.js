@@ -28,14 +28,13 @@ const inputBtnEl = document.querySelector('#customSettingsBtn')
 const checkBoxEl = document.querySelector('#noCorners')
 const settingsBtnEl = document.querySelector('#settingsBtn')
 const infoMenuEl = document.querySelector('#infoMenu')
-// infoMenuEl.style.backgroundImage = 'url(assets/info_icon.svg)';
 const exitPopupEl = document.querySelector('#exitPopup')
 /*----- event listeners -----*/
 
 /*----- custom input btn listeners -----*/
 infoMenuEl.addEventListener('mouseenter', function(){
     let menu = document.createElement('div')
-    menu.style.opacity = '0.95';
+    menu.style.opacity = '0.70';
     menu.style.backgroundColor = '#669999';
     
     menu.style.width = '100px'
@@ -263,37 +262,12 @@ function generateGrids(){
     }
     //maybe move all of this to some render function
     //scale the board to fit the amount of tiles we have
-    document.querySelector('#board').style.width = `${32*xAxis}px`; 
-    document.querySelector('#board').style.height = `${32*yAxis}px`;
+    document.querySelector('#board').style.width = `${30*xAxis}px`; 
+    document.querySelector('#board').style.height = `${30*yAxis}px`;
 
-    //TODO: Figure out what to do with the status bar
-    document.querySelector('#statusBar').style.width = `${32*xAxis}px`;
-    document.querySelector('#toolBar').style.width = `${32*xAxis}px`;
-    document.querySelector('#mainDisplay').style.width = `${32*xAxis}px`;
-    document.querySelector('body').style.width = `${32*xAxis + 400}px`;
-    document.querySelector('body').style.height = `${32*yAxis + 400}px`;
-    document.querySelector('#mainDisplay').style.height = `${32*yAxis + 171}px`;
-    document.querySelector('#popupScreen').style.width = `${32*xAxis + 400}px`;
-    document.querySelector('#popupScreen').style.height = `${32*yAxis + 400}px`;
-    let vw = window.innerWidth
-    let vh = window.innerHeight
-    if(vw > 32*xAxis + 400){
-        document.querySelector('body').style.width = `${vw}px`;
-    } 
-    if(vh > 32*yAxis + 400){
-        document.querySelector('body').style.height = `${vh}px`;
-    }
-    document.querySelector('#statusBar').style.height = '90px';
-    document.querySelector('#toolBar').style.height = '90px';
-    let panelBoxesEl = document.querySelectorAll('.panelBoxes');
-    //adjust the dimensions of the panel boxes if beyond a certain size;
-    if(32*xAxis*0.25 > 160){
-        panelBoxesEl.forEach(function(div){
-            div.style.width= '160px';
-            div.style.margin = '40px';
-        })
-        document.querySelector('#statusBar').style.justifyContent = 'center';
-    }
+    // //TODO: Figure out what to do with the status bar
+    document.querySelector('#statusBar').style.width = `${30*xAxis}px`;
+    document.querySelector('#toolBar').style.width = `${30*xAxis}px`;
 }
 function closePopup(){ 
     let popupStyle = document.querySelector('#popup').style;

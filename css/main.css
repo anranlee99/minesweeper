@@ -1,5 +1,5 @@
 *{
-    box-sizing: inherit;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
@@ -7,14 +7,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 body{
-    height: 100vh;
-    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Open Sans', sans-serif;
     background-color: #003333;
-
+    height: 100vh;
+    width: 100vw;
     
 }
 
@@ -24,13 +23,15 @@ p{
 }
 
 #mainDisplay{
-    width: 60%;
-    height: 60%;
+    /* flex-direction: column;  */
     display: flex; 
-    flex-direction: column; 
-    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    /* position: relative;
     z-index: 0;
-    margin: auto;
+    margin: auto; */
     
 }
 #settingsBtn{
@@ -40,9 +41,18 @@ p{
     align-self: flex-end;
     background: transparent;
 }
+
 #settingsBtn:hover{
     cursor: pointer;
 }
+
+#toolBar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-bottom: 1rem;
+}
+
 #infoMenu{
     height: 50px;
     width: 50px;
@@ -57,15 +67,7 @@ p{
     height: 100%;
     width: 100%;
 }
-#toolBar {
-    
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    /* align-items: center; */
-    align-content: space-around;
-    /* flex-direction: row; */
-}
+
 #settingsIcon{
     height: 100%;
     width: 100%;
@@ -137,54 +139,51 @@ input {
 
 #statusBar{
     display: flex;
-    width: 300px;
-    height: 100px; 
-    justify-content: space-evenly;
-    align-items: center;
-    margin: auto;
-    background: #808080;
-}
-
-.tile{
-    border: 1px solid black;
-    display: flex;
-    width: 100px; 
-    height: 100px; 
     justify-content: center;
     align-items: center;
-} 
+     padding: 1rem;
+    gap: 1rem; 
+    background: #808080;
+}
+#resetBtn{
+    border: none;
+    background: #808080;
+    height: 75px;
+    /* flex-shrink: 1;
+    min-width: 0; */
+    
+}
 
 .panelBoxes{
     display: flex;
-    justify-content: space-evenly;
     background-color: black;
-    align-items: center;
-    width: 25%;
-    height: 90%;
+    max-height: 90px;
+    /* height: 90%; */
+    
 }
 
-#resetDiv{
+#game-container{
+
+}
+.tile{
+    border: 1px solid black;
     display: flex;
-    height: 80px;
-    /* border: 1px solid black; */
-    width: 80px;
-}
-#resetBtn{
-    height: 100%;
-    width: 100%; 
-    border: none;
-    background: #808080;
-}
+    /* justify-content: center;
+    align-items: center; */
+} 
+
+
 #resetIcon{
-    height: 100%;
-    width: 100%; 
+    height: 85%;
     border: 1px solid black;
     background: #808080;
 }
 
 .statusNums{
-    width: 33%;
-    height: 90%;
+    height: 100%;
+    width: calc(100%/3);
+    /* width: 33%; */
+    padding: 5%;
 }
 
 /* disable dragging and selecting images */
@@ -199,4 +198,5 @@ img {
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
+    
   }
