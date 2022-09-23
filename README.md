@@ -1,8 +1,8 @@
-# minesweeper
+# Minesweeper
 
 ## About
 
-Hi, I'm Aaron and I've been a long time enjoyer of minesweeper. My love for the game started in my school days, where minesweeper was a reliable time waster that could be played on every school computer. I originally learned how to play on the family computer long before I knew how to program. Later, my skills were honed on what is, in my opinion, the best website to play minesweeper on: 
+Hi, I'm Aaron and I've been a long time enjoyer of minesweeper. My love for the game started in my school days, where minesweeper was a reliable time waster that could be played on every school computer. I originally learned how to play on the family computer long before I knew how to program. Later, my skills were honed on what is, in my opinion, the best website to play minesweeper: 
 https://minesweeper.online/
 
 
@@ -19,11 +19,11 @@ and the player must navigate the playing field without triggering the mines.
 ### How to play
 The objective of minesweeper is to clear the board of all tiles except for any mines. If the player steps on a mine, then they lose.
 
-As the player uncovers tiles, the uncovered tile will either have no number, or have a number, indicating how many mines are in the adjacent tiles. Through logic, the player can safely deduce which tiles cannot be mines, and uncover more tiles, thus revealing more information that can be used to further progress.
+As the player uncovers tiles, the uncovered tile will either have no number, or have a number indicating how many mines are in the adjacent tiles. Through logic, the player can safely deduce which tiles cannot be mines, and uncover more tiles, further revealing more information that can be used to progress.
 
 That being said, minesweeper is traditionally not a game of pure logic, as there are situations where mines can be in various configurations and still satisfy the numbers indicated, the player must take chances. Without manipulated mine generation, there are games that may or may not require guessing. 
 
-A more in depth explanations on the exact strategies used to effectively navigate a game, visit:
+A more in depth explanation of the exact strategies used to effectively navigate a game can be found at:
 https://minesweeper.online/help/patterns
 
 
@@ -41,23 +41,23 @@ https://anranlee99.github.io/minesweeper/
 The source code can be found at:
 https://github.com/anranlee99/minesweeper
 
-### NOTE: as of 9/23/2022, game settings can be unintentionally accessed by the user in the browser's development tools, doing so may result in an unsatisfactory playing experience. 
+#### *Note*: as of 9/23/2022, game settings can be unintentionally accessed by the user in the browser's development tools, doing so may result in an unsatisfactory playing experience. 
 
 ## Screenshots:
 <figure>
-  <figcaption>Gameplay</figcaption>
+  <figcaption><strong>Gameplay</strong></figcaption>
   <img src="assets/Gameplay.png" alt="Trulli" width="900">
 </figure>
 
 
 <figure>
-  <figcaption>Custom Settings Menu</figcaption>
+  <figcaption><strong>Custom Settings Menu</strong></figcaption>
   <img src="assets/MenuScreenshot.png" alt="Trulli" width="900">
 </figure>
 
 
 <figure>
-  <figcaption>Hover Menu</figcaption>
+  <figcaption><strong>Hover Menu</strong></figcaption>
   <img src="assets/HoverMenu.png" alt="Trulli" width="900">
 </figure>
 
@@ -71,7 +71,7 @@ https://github.com/anranlee99/minesweeper
 ## Developer message + Next Steps:
 Minesweeper is a timeless classic that does not require being reinvented. The focus of the this recreation heavily emphasizes a way of programming minesweeper without nested arrays. With the use  of IDs and CSS formatting, this game has been implemented without any data structure representing an abstraction of the mine locations. 
 
-All functions interacting with the mine locations act on the IDs. The logic performed when calculating adjacent tiles act as if it the board were in an array, but the functions that perform the subsequent actions only act on the DOM element targeted by its ID. 
+All functions interacting with the mine locations act on the IDs. The logic performed when calculating adjacent tiles act as if the board were an array, but the functions that perform the subsequent actions only act on the DOM element targeted by its ID. 
 
 A feature in the settings menu allows the player to never uncover the mines in the corner, as it is optimal strategy to begin in the corners, and I find it frustrating to lose when doing so. 
 
