@@ -46,18 +46,19 @@ https://github.com/anranlee99/minesweeper
   <img src="assets/Gameplay.png" alt="Trulli" width="900">
   <figcaption>Gameplay</figcaption>
 </figure>
-
+<br>
 
 <figure>
   <img src="assets/MenuScreenshot.png" alt="Trulli" width="900">
   <figcaption>Custom Settings Menu</figcaption>
 </figure>
-
+<br>
 
 <figure>
   <img src="assets/HoverMenu.png" alt="Trulli" width="900">
   <figcaption>Hover Menu</figcaption>
 </figure>
+<br>
 
 ## Technologies Used:
 ### NOTE: as of 9/23/2022, game settings can be unintentionally accessed by the user in the browser's development tools, doing so may result in an unsatisfactory playing experience. 
