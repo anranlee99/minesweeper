@@ -1,3 +1,4 @@
+<img src="assets/Gameplay.png" width=900>
 # minesweeper
 
 ## About
