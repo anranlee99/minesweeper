@@ -41,6 +41,8 @@ https://anranlee99.github.io/minesweeper/
 The source code can be found at:
 https://github.com/anranlee99/minesweeper
 
+### NOTE: as of 9/23/2022, game settings can be unintentionally accessed by the user in the browser's development tools, doing so may result in an unsatisfactory playing experience. 
+
 ## Screenshots:
 <figure>
   <figcaption>Gameplay</figcaption>
@@ -61,7 +63,6 @@ https://github.com/anranlee99/minesweeper
 
 
 ## Technologies Used:
-### NOTE: as of 9/23/2022, game settings can be unintentionally accessed by the user in the browser's development tools, doing so may result in an unsatisfactory playing experience. 
 - HTML
 - CSS
 - JavaScript
