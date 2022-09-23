@@ -46,10 +46,14 @@ https://github.com/anranlee99/minesweeper
   <img src="assets/Gameplay.png" alt="Trulli" width="900">
   <figcaption>Gameplay</figcaption>
 </figure>
+
+
 <figure>
   <img src="assets/MenuScreenshot.png" alt="Trulli" width="900">
   <figcaption>Custom Settings Menu</figcaption>
 </figure>
+
+
 <figure>
   <img src="assets/HoverMenu.png" alt="Trulli" width="900">
   <figcaption>Hover Menu</figcaption>
