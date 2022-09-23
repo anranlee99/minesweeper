@@ -1,4 +1,3 @@
-<img src="assets/Gameplay.png" width=900>
 # minesweeper
 
 ## About
@@ -35,16 +34,35 @@ The player can indicate which tiles are known mines by placing a flag. In this g
 ### Chording
 If a player has placed flags down, and the amount of flags adjacent to a number satisfies its value, the player can "chord" which means to automatically uncover all the adjacent tiles that are not flags. In this game, this is done by left clicking the number that has been satisfied.
 
+## Getting Started:
 The game can be found at:
 https://anranlee99.github.io/minesweeper/
 
 The source code can be found at:
 https://github.com/anranlee99/minesweeper
 
+## Screenshots:
+<figure>
+  <img src="assets/Gameplay.png" alt="Trulli" width="900">
+  <figcaption>Gameplay</figcaption>
+</figure>
+<figure>
+  <img src="assets/MenuScreenshot.png" alt="Trulli" width="900">
+  <figcaption>Custom Settings Menu</figcaption>
+</figure>
+<figure>
+  <img src="assets/HoverMenu.png" alt="Trulli" width="900">
+  <figcaption>Hover Menu</figcaption>
+</figure>
+
+## Technologies Used:
 ### NOTE: as of 9/23/2022, game settings can be unintentionally accessed by the user in the browser's development tools, doing so may result in an unsatisfactory playing experience. 
+- HTML
+- CSS
+- JavaScript
 
 
-## Developer message:
+## Developer message + Next Steps:
 Minesweeper is a timeless classic that does not require being reinvented. The focus of the this recreation heavily emphasizes a way of programming minesweeper without nested arrays. With the use  of IDs and CSS formatting, this game has been implemented without any data structure representing an abstraction of the mine locations. 
 
 All functions interacting with the mine locations act on the IDs. The logic performed when calculating adjacent tiles act as if it the board were in an array, but the functions that perform the subsequent actions only act on the DOM element targeted by its ID. 
